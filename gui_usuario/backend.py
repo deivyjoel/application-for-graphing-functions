@@ -1,13 +1,12 @@
+"""
+Archivo encargado de la GUI para el usuario.
+Crea clases que hereda de tk.Frame permitiendo un mejor orden en la estructura de la GUI.
+Cada clase representa una parte fundamental de la página.
+"""
 import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 from graficar_funciones.backend import FigureBuilder
-
-"""
-Archivo backend de la GUI para el usuario.
-Crea clases que herenda de tk.Frame permitiendo un mejor orden en la estructura de la GUI.
-Cada clase representa una parte fundamental de la página
-"""
 
 class TitleFrame(tk.Frame):
     """
@@ -34,7 +33,7 @@ class TitleFrame(tk.Frame):
         
 class InputAndOptions(tk.Frame):
     """
-     Contenedor de interfaz gráfica para ingresar una función simbólica
+    Contenedor de interfaz gráfica para ingresar una función simbólica
     y seleccionar operaciones como derivar o integrar
     
     This frame includes:
@@ -43,7 +42,7 @@ class InputAndOptions(tk.Frame):
         - Un botón 'Graficar' y un botón 'limpiar' que ejecuta según on_submit_callback1 y on_submit_callback2
     
     Example:
-        >>> opciones = InputAndOptions(root, callbac1, callback2)
+        >>> opciones = InputAndOptions(root, callback1, callback2)
         >>> opciones.pack()    
     """
     def __init__(self, parent, on_submit_callback1, on_submit_callback2):
@@ -100,9 +99,29 @@ class InputAndOptions(tk.Frame):
 
 class GraphicCanvas(tk.Frame):
     """
-    
+    Contenedor gráfico para integrar un objeto FigureBuilder dentro de una GUI con Tkinter.
+
+    Esta clase encapsula el widget necesario para mostrar un gráfico de Matplotlib embebido
+    en la interfaz gráfica de usuario, facilitando su actualización dinámica.
+
+    Available Methods:
+        update_graphic(): Actualiza el contenido del gráfico en la GUI.
+    Example:
+        grafico1 = GraphicCanvas(root, FigureBuilder)
+        grafico1.update_graphic()
     """
     def __init__(self, parent, figure_builder : FigureBuilder):
+        """
+        Inicializa el contenedor gráfico para incrustar el gráfico en la GUI.
+        
+        Attributes:
+            figure_builder (FigureBuilder): Objeto encargado de gestionar la figura y el gráfico.
+            canvas_widget (FigureCanvasTkAgg): Widget de Matplotlib para representar la figura dentro del Frame.
+
+        Args:
+            parent (tk.Widget): Contenedor padre donde se colocará el Frame.
+            figure_builder (FigureBuilder): Objeto que proporciona la figura a mostrar.
+        """
         super().__init__(parent)
         self.figure_builder = figure_builder
         self.canvas_widget = FigureCanvasTkAgg(self.figure_builder.get_figure(), master=self)
@@ -110,6 +129,10 @@ class GraphicCanvas(tk.Frame):
         self.canvas_widget.get_tk_widget().pack()
 
     def update_graphic(self):
+        """
+        Redibuja el contenido del gráfico en la GUI.
+        Se utiliza para actualizar la figura cuando se han realizado cambios.
+        """
         self.canvas_widget.draw()
         
         
