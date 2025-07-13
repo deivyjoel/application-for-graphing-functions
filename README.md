@@ -28,7 +28,10 @@ pip install -r requirements.txt
 ```
 
 ## ¿Cómo funciona?
+
 <img width="598" height="630" alt="image" src="https://github.com/user-attachments/assets/62a52041-c0c5-4181-ab66-88aef4cd9473" />
+
+
 1. Ingresá una función simbólica como string, por ejemplo:
 ```text
 x**2 + 2*x
